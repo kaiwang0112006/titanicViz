@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="../js/d3.min.js"></script>
+  <script src="../js/jquery110.js"></script>
+  <script src="../js/viz1.js"></script>
+  <script src="../js/dimple.v2.2.0.min.js"></script>
+  <style>
+
+  </style>
+</head>
+<body>
+  <script type="text/javascript">
+  vizDraw()
+  
+  </script>
+  
+<h2>Who has the best chance of survival</h2>
+<div id="main"></div>
+<span> Passenger Class: &nbsp;
+	<select name = "pclass" id='pclass' onchange="vizDraw()">
+	    <option  value='all' selected='selected'>all</option>
+		<option  value='1'>1</option>
+		<option  value='2'>2</option>
+		<option  value='3'>3</option>
+	</select>
+</span>&nbsp;&nbsp;
+<span> Gender: &nbsp;
+	<select name = "gender" id='gender' onchange="vizDraw()">
+	    <option  value='all' selected='selected'>all</option>
+		<option  value='female'>female</option>
+		<option  value='male'>male</option>
+	</select>
+</span>&nbsp;&nbsp;
+<span> Age: &nbsp;
+	<select name = "age" id='age' onchange="vizDraw()">
+	    <option  value='all' selected='selected'>all</option>
+		<option  value='child'><18</option>
+		<option  value='adult'>>=18</option>
+	</select>
+</span>&nbsp;&nbsp;
+<div id="viz"></div>
+</body>
+</html>
