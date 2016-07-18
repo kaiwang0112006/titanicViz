@@ -25,31 +25,8 @@ function vizDraw(){
 	d3.csv("data.csv", function(error, data){
 		// Set svg object
 	    var svg = dimple.newSvg("#viz", 600, 600);
-	    var cleardata = []
-		
-		/* filter data */
-		if (pclass != 'all'){
-			data = dimple.filterData(data, "Pclass", pclass);			
-		}
-		if (gender != 'all'){
-			data = dimple.filterData(data, "Sex", gender);			
-		}
-		
-		for (i in data){
-			data[i]['Age'] = parseFloat(data[i]['Age'])
-			if ((age === "child" && data[i]['Age']<=18) || (age === "adult" && data[i]['Age']>18) || (age === "all")){
-				cleardata.push({"Age":data[i]['Age'],"Survived":data[i]['Survived'],"Pclass":data[i]['Pclass']});
-			}
-		}
-		/* aggregate data */
-		var Survived = 0
-		for (i in cleardata){
-			if (cleardata[i]['Survived'] == '1'){
-				Survived += 1;
-			}
-		}
+	    var histdata = parseData(data, pclass, age, gender)
 
-		var histdata = [{"status":"Survived","Person":Survived},{"status":"Unsurvived","Person":cleardata.length-Survived}]
         //plot bar plot
 		var myChart = new dimple.chart(svg, histdata);
         myChart.setBounds(60, 130, 510, 330);
@@ -63,7 +40,7 @@ function vizDraw(){
         s.addEventHandler("mouseover", onHover);
         // Handle the leave event - overriding the default behaviour
         s.addEventHandler("mouseleave", onLeave);
-        myChart.draw();
+        myChart.draw(1000);
         
         // Event to handle mouse enter
         function onHover(e) {
@@ -116,6 +93,85 @@ function vizDraw(){
             }
         }
         
+        // Bind select on change
+        var selectids = ["pclass",'gender','age']
+        for (i in selectids){
+            $("#"+selectids[i]).change(function(){
+            	/* Parsing the parameters which will be fetched by 3 select tag. */
+            	if ($('#pclass option:selected').val()!=undefined){
+            		var pclass = $('#pclass option:selected').val();
+            	}else{
+            		var pclass = "all";
+            	}
+            	
+            	if ($('#age option:selected').val()!=undefined){
+            		var age = $('#age option:selected').val();
+            	}else{
+            		var age = "all"
+            	}
+            	
+            	if ($('#gender option:selected').val()!=undefined){
+            		var gender = $('#gender option:selected').val();
+            	}else{
+            		var gender = "all"
+            	}
+            	//update plot
+            	myChart.data = parseData(data,pclass, age, gender);
+            	myChart.draw(1000);
+            	updatemsgs(megs,myChart.data,pclass,gender,age)
+            })       	
+        }
+        
+        // update survival rate
+        var megs = $("#megs");
+        updatemsgs(megs,histdata,pclass,gender,age)
 
 	} );
+}
+
+function updatemsgs(megs,histdata,pclass,gender,age){
+	megs.html('');
+    var surRate = parseFloat(histdata[0]["Person"])/parseFloat(histdata[0]["Person"] + histdata[1]["Person"]);
+    surRate = (surRate*100).toFixed(2);
+    var megtop = $("<p>Survival Rate:  " + surRate + "%</p>");
+    var meggroup = $("<p>for passengers of</p>");
+    var pclassgroup = $("<p>pclass:" + pclass + "</p>") ;
+    var gendergroup = $("<p>gender:" + gender + "</p>") ;
+    var agegroup = $("<p>age:" + age + "</p>");
+    
+    megtop.appendTo(megs);
+    meggroup.appendTo(megs);
+    pclassgroup.appendTo(megs);
+    gendergroup.appendTo(megs);
+    agegroup.appendTo(megs);	
+}
+
+function parseData(data,pclass, age, gender){
+	var cleandata = []
+	var histdata = []
+	
+	/* filter data */
+	if (pclass != 'all'){
+		data = dimple.filterData(data, "Pclass", pclass);			
+	}
+	if (gender != 'all'){
+		data = dimple.filterData(data, "Sex", gender);			
+	}
+	
+	for (i in data){
+		data[i]['Age'] = parseFloat(data[i]['Age'])
+		if ((age === "<18" && data[i]['Age']<=18) || (age === ">=18" && data[i]['Age']>18) || (age === "all")){
+			cleandata.push({"Age":data[i]['Age'],"Survived":data[i]['Survived'],"Pclass":data[i]['Pclass']});
+		}
+	}
+	/* aggregate data */
+	var Survived = 0
+	for (i in cleandata){
+		if (cleandata[i]['Survived'] == '1'){
+			Survived += 1;
+		}
+	}
+
+	var histdata = [{"status":"Survived","Person":Survived},{"status":"Unsurvived","Person":cleandata.length-Survived}]	
+	return histdata
 }
