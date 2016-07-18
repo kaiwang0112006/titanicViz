@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="../js/d3.min.js"></script>
+  <script src="../js/jquery110.js"></script>
+  <script src="../js/viz3.js"></script>
+  <script src="../js/dimple.v2.2.0.min.js"></script>
+  <style>
+    .surrate {
+    font-weight:bolder;
+    }
+  </style>
+</head>
+<body>
+  <script type="text/javascript">
+  vizDraw()
+  
+  </script>
+  
+<h2>Who has the best chance of survival after the sinking of the titanic?</h2>
+<div id="main" style="font-size:5px;font-family:Times New Roman "><p>This plot is based on the titanic data. Find survival rate of different groups of passegers by selecting different features.</p></div>
+<br><br>
+<div style="float:left">
+	<span> Passenger Class: &nbsp;
+		<select name = "pclass" id='pclass'>
+		    <option  value='all' selected='selected'>all</option>
+			<option  value='1'>1</option>
+			<option  value='2'>2</option>
+			<option  value='3'>3</option>
+			<option  value='1 and 2'>1 and 2</option>
+			<option  value='2 and 3'>2 and 3</option>
+			<option  value='1 and 3'>1 and 3</option>
+		</select>
+	</span>&nbsp;&nbsp;
+	<span> Gender: &nbsp;
+		<select name = "gender" id='gender'>
+		    <option  value='all' selected='selected'>all</option>
+			<option  value='female'>female</option>
+			<option  value='male'>male</option>
+		</select>
+	</span>&nbsp;&nbsp;
+	<span> Age: &nbsp;
+		<select name = "age" id='age'>
+		    <option  value='all' selected='selected'>all</option>
+			<option  value='<18'><18</option>
+			<option  value='>=18'>>=18</option>
+		</select>
+	</span>&nbsp;&nbsp;
+</div>
+<br>
+<div id="viz" style="float:left;position:absolute"></div>
+<div id="megs" style="float:right;margin-right:500px"></div>
+</body>
+</html>
