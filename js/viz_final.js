@@ -1,12 +1,12 @@
 function vizDraw(){
 	/* Reset the div */
-    $("#viz").html('')
+    $("#viz").html('');
     
     /* Parsing the parameters which will be fetched by 3 select tag. */
     var fetchR = fetchChoice();
-    var pclass = fetchR[0],
-        age = fetchR[1],
-        gender = fetchR[2];
+    var pclass = fetchR[0];
+    var age = fetchR[1];
+    var gender = fetchR[2];
 	
 	d3.csv("data.csv", function(error, data){
 		// Set svg object
@@ -17,17 +17,18 @@ function vizDraw(){
 		var myChart = new dimple.chart(svg, histdata);
         myChart.setBounds(60, 130, 510, 330);
         var xaxis = myChart.addCategoryAxis("x", "status");
+        xaxis.addOrderRule(["Survived","Unsurvived"])
         var yaxis = myChart.addMeasureAxis("y", "Person");
         xaxis.title = "Survived or not";
         yaxis.title = "Person Count";
         
-        var maxy = Math.max(histdata[0]['Person'],histdata[1]['Person']);
+        var maxy = Math.max(histdata[0]['Person'], histdata[1]['Person']);
         if (maxy <= 5){
         	yaxis.ticks = maxy;
         }
         
-        var s = myChart.addSeries(null, dimple.plot.bar);
-        
+        var s = myChart.addSeries(["status"], dimple.plot.bar);
+
         // Handle the hover event - overriding the default behaviour
         s.addEventHandler("mouseover", onHover);
         // Handle the leave event - overriding the default behaviour

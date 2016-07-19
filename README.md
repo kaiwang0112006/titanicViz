@@ -10,7 +10,11 @@ The sinking of the RMS Titanic is one of the most infamous shipwrecks in history
 
 Since I've explored this dataset in the final project of [P2](https://github.com/kaiwang0112006/titanic_exploring)， I decide to show readers which group of passengers have the best chance of survival. Passengers are divided into different groups based on their class, gender and age. These three features I've discussed a lot in [P2](https://github.com/kaiwang0112006/titanic_exploring).
 
-What I want is to let reads to explore the data. By choosing the different combination of features, they'll be able to find the survival rate of the group of people they care about. And they'll find out which group has the best chance of survival by their own.
+What I want is to let reads to explore the data. By choosing the different combination of features, they'll be able to find the survival rate of the group of people they care about. And they'll find out which group has the best chance of survival by their own. 
+
+There're some conclusions that I want to draw audience's attention to. First, wemen have a better chance of survival then men if only we only focus on the changes of gender. There's a clear decrease of unsurvived people. And if taken the class into count, women from the first class had the best chances to survive. A sadly fact is that men in the third class have the lowest chances to survive.
+
+Gladly Xiaoli found the some information that I want to show from her feedback and I also made a few adjustment.
 
 According to Alvin's feedback, I added notes on the right top corner to tell audience the exact survival rate of each group.
 
